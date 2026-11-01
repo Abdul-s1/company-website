@@ -143,9 +143,7 @@
     align-items: flex-start;
     gap: 6px;
     padding: 32px var(--gutter) 40px;
-    background: rgba(255, 255, 255, 0.84);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
+    background: rgba(255, 255, 255, 0.78);
     visibility: hidden;
     opacity: 0;
     transform: translateY(-12px);
@@ -166,6 +164,21 @@
   .main-nav a:not(.button)::after { bottom: 6px; height: 3px; }
   .main-nav__cta { margin-top: 24px; }
   body.menu-open { overflow: hidden; }
+
+  /* While the menu is open, the page behind it goes soft and slightly faded,
+     so the menu links stand out. (The panel can't blur the page itself:
+     it sits inside the frosted header, which keeps its blur to itself.) */
+  main,
+  .site-footer,
+  .float-contact {
+    transition: filter 360ms var(--ease-smooth), opacity 360ms var(--ease-smooth);
+  }
+  body.menu-open main,
+  body.menu-open .site-footer,
+  body.menu-open .float-contact {
+    filter: blur(14px);
+    opacity: 0.55;
+  }
 }
 
 /* --- 4. Inner-page hero -----------------------------------------------------
