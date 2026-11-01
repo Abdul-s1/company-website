@@ -21,15 +21,28 @@
   const groups = document.querySelectorAll('[data-reveal]');
 
   if ('IntersectionObserver' in window && groups.length) {
+    const reveal = part => {
+      part.classList.add('reveal-in');
+      part.classList.remove('reveal-pending');
+      observer.unobserve(part);
+    };
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const part = entry.target;
-        part.classList.add('reveal-in');
-        part.classList.remove('reveal-pending');
-        observer.unobserve(part);
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) reveal(entry.target); });
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
+
+    // Safety net for very fast flings: anything already scrolled past is
+    // shown, even if the observer never saw it on screen.
+    let sweeping = false;
+    window.addEventListener('scroll', () => {
+      if (sweeping) return;
+      sweeping = true;
+      requestAnimationFrame(() => {
+        sweeping = false;
+        document.querySelectorAll('.reveal-pending').forEach(part => {
+          if (part.getBoundingClientRect().top < window.innerHeight) reveal(part);
+        });
+      });
+    }, { passive: true });
 
     groups.forEach(group => {
       const parts = group.children.length && group.tagName !== 'IMG' ? Array.from(group.children) : [group];

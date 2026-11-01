@@ -26,9 +26,10 @@ company-website/
 │                              search engines and social previews link to these addresses)
 ├── robots.txt  sitemap.xml    For search engines
 │
+├── update-photos.bat          Double-click after dropping in new photos (see below)
 ├── tools/
 │   └── prepare-photos.py      Turns camera photos into web-ready .webp files
-│                              (for your computer only; don't upload it)
+│                              (update-photos.bat runs it; don't upload either)
 │
 └── assets/
     ├── css/
@@ -51,6 +52,8 @@ company-website/
     ├── fonts/                 Inter and Poppins (self-hosted, with their licences)
     └── images/
         ├── brand/             Logo pieces (header logo, opening animation)
+        ├── showreel/          Home page showreel photos, 01, 02, 03… in play order
+        ├── featured/          our-work-first.webp: the first photo on Our Work
         └── projects/          One folder per project, numbered photos inside
             ├── room-803-deck/         the flagship rooftop deck
             ├── 9th-floor-lobby/  buffet-cladding/  timber-slat-wall/
@@ -93,38 +96,62 @@ Every photo on the site is **one file** and **one line** of HTML. The shape of e
 photo on the page is set by the CSS, so a new photo of a different size or shape just
 fills the same space. You never have to edit sizes.
 
-**1. Prepare the photo.** Put your new photos in any folder on your computer and run:
+### The quick way: drop, rename, double-click
+
+1. Open the folder the photo lives in (see the table at the end of this section).
+2. Delete the photo you're replacing, e.g. `04.webp`.
+3. Drop your new photo in and give it the same name, keeping its own ending,
+   e.g. `04.jpg`.
+4. Double-click **`update-photos.bat`** in the website folder.
+
+It turns every new JPG/PNG under `assets/images/` into a small `.webp` with the same
+name, turns it the right way up, removes hidden GPS data, and deletes the original.
+Refresh the page and the new photo is there. You can swap many photos in different
+folders and double-click once at the end. (It needs Python, which this computer has.)
+
+**Don't** just rename a `.jpg` to `.webp`: it would be a 3–6 MB file with your GPS
+location inside it, on a public website.
+
+### Pointing a spot at a different photo
+
+To show a photo from another folder, open the page's `.html` file, search for the
+old file name, and change `src="..."` to the new path. Also update `alt="..."`:
+one sentence saying what the photo shows (screen readers and Google read it).
+
+To bring in a whole folder of new photos from elsewhere:
 
 ```bash
-python tools/prepare-photos.py "C:/path/to/new photos" assets/images/projects/my-project
+python tools/prepare-photos.py "C:/path/to/new photos" assets/images/projects/my-new-project
 ```
-
-This shrinks them, turns them the right way up, removes hidden GPS data and saves them
-as `.webp`. (Want to keep it simpler? A `.jpg` works too. It's just a bigger file.)
-
-**2. Point the page at it.** Find the old file name in the table below, open that
-page's `.html` file, search for the file name and replace it with the new one.
-Also update the `alt="..."`: one sentence saying what the photo shows (people using
-screen readers and Google read it).
-
-**Or: keep the same name.** Save your new photo over the old file with exactly the
-same name, and nothing in the code changes at all.
 
 ### The home page showreel
 
-The showreel is the list of `<img class="showreel__slide" ...>` lines in `index.html`,
-right under the comment "HOW TO CHANGE THE SHOWREEL PHOTOS". Each line is one photo:
+The showreel photos live in **`assets/images/showreel/`**, named `01.webp`, `02.webp`,
+`03.webp`… They play in number order.
+
+- **Swap one:** the quick way above (e.g. delete `04.webp`, drop in `04.jpg`,
+  double-click `update-photos.bat`). Then, in `index.html`, update that photo's
+  caption (`data-title`) and description (`alt`). Search for
+  "HOW TO CHANGE THE SHOWREEL PHOTOS" to find the list.
+- **Add one:** save it as the next number (e.g. `10.jpg`), double-click
+  `update-photos.bat`, then in `index.html` copy the last showreel line and change
+  the number, caption and description.
+- **Remove one:** delete its file and its line in `index.html`.
+- **Reorder:** rename the files (e.g. swap `02` and `05`), then swap their two
+  lines' captions and descriptions.
 
 ```html
-<img class="showreel__slide" src="assets/images/projects/room-803-deck/01.webp" data-title="Rooftop suite deck, Cape Town" alt="Rooftop suite deck: a granite bar counter with stools, looking out over the Atlantic">
+<img class="showreel__slide" src="assets/images/showreel/01.webp" data-title="Rooftop suite deck, Cape Town" alt="Rooftop suite deck with a granite bar counter...">
 ```
 
-- `src`: the photo (landscape photos look best)
-- `data-title`: the short caption in the glass pill
-- `alt`: a sentence describing the photo
+Landscape photos look best. The timer bar adjusts itself.
 
-Copy a line to add a photo, delete a line to remove one, move lines to change the
-order. The timer bar adjusts itself.
+### The first photo on Our Work
+
+It's **`assets/images/featured/our-work-first.webp`**. Replace that one file the quick
+way (delete it, drop in `our-work-first.jpg`, double-click `update-photos.bat`). If the
+new photo shows something different, update its `alt` in `projects.html` (search for
+`our-work-first`).
 
 ### Before/after sliders
 
@@ -149,61 +176,55 @@ lines).
 
 ### Where every photo is used
 
-Paths below start from `assets/images/projects/`.
+Paths below start from `assets/images/`.
 
 | Page | Section | Photo file |
 | --- | --- | --- |
-| Home | Hero showreel | `room-803-deck/01.webp` |
-| Home | Hero showreel | `9th-floor-lobby/09.webp` |
-| Home | Hero showreel | `buffet-cladding/03.webp` |
-| Home | Hero showreel | `room-803-deck/15.webp` |
-| Home | Hero showreel | `timber-slat-wall/01.webp` |
-| Home | Hero showreel | `ceilings-foyer/04.webp` |
-| Home | Hero showreel | `room-803-deck/30.webp` |
-| Home | Hero showreel | `gym/02.webp` |
-| Home | What we deliver | `9th-floor-lobby/08.webp` |
-| Home | What we deliver | `buffet-cladding/04.webp` |
-| Home | What we deliver | `gym/08.webp` |
-| Home | What we deliver | `room-803-deck/04.webp` |
-| Home | Before and after (phone version) | `suite-bathroom/after-02.webp` |
-| Home | Before and after | `lift-lobby/after-02.webp` |
-| Home | Before and after (phone version) | `suite-bathroom/before-02.webp` |
-| Home | Before and after | `lift-lobby/before-01.webp` |
-| Home | Close-up showcase | `room-803-deck/18.webp` |
-| Home | Working in open hotels | `9th-floor-lobby/10.webp` |
-| Home | Contact call to action | `room-803-deck/06.webp` |
-| Services | Page hero | `lift-lobby/after-02.webp` |
-| Services | Core services | `bathroom-gallery/completed-03.webp` |
-| Services | Core services | `lift-lobby/after-01.webp` |
-| Services | Core services | `suite-bathroom/after-01.webp` |
-| Services | Core services | `bathroom-gallery/completed-06.webp` |
-| Services | How we work | `lift-lobby/before-02.webp` |
-| Services | How we work | `suite-bathroom/before-01.webp` |
-| Services | How we work | `bathroom-gallery/completed-04.webp` |
-| Services | How we work | `bathroom-gallery/completed-02.webp` |
-| Services | How we work | `lift-lobby/after-01.webp` |
-| Our Work | Projects | `room-803-deck/01.webp` |
-| Our Work | Projects | `lift-lobby/after-02.webp` |
-| Our Work | Projects | `lift-lobby/before-01.webp` |
-| Our Work | Projects | `suite-bathroom/after-02.webp` |
-| Our Work | Projects | `suite-bathroom/before-02.webp` |
-| Our Work | Projects | `buffet-cladding/03.webp` |
-| Our Work | Projects | `timber-slat-wall/01.webp` |
-| Our Work | Projects | `ceilings-foyer/04.webp` |
-| Our Work | Projects | `gym/02.webp` |
-| Our Work | Catalogue download | `room-803-deck/15.webp` |
-| Our Work | Catalogue download | `9th-floor-lobby/08.webp` |
-| Our Work | Catalogue download | `bathroom-gallery/completed-05.webp` |
-| About | Page hero | `bathroom-gallery/completed-02.webp` |
-| About | Our company | `lift-lobby/after-01.webp` |
-| About | Photo strip | `bathroom-gallery/completed-03.webp` |
-| About | Photo strip | `lift-lobby/after-02.webp` |
-| About | Photo strip | `suite-bathroom/after-01.webp` |
-| Request a Quote | Recent work | `lift-lobby/after-02.webp` |
-| Request a Quote | Recent work | `bathroom-gallery/completed-05.webp` |
-| Request a Quote | Recent work | `bathroom-gallery/completed-01.webp` |
-| Request a Quote | Recent work | `lift-lobby/after-01.webp` |
-| Our Work | Full gallery | 48 photos, one line each, in `projects.html` under "Full gallery" |
+| Home | Hero showreel | `showreel/01.webp … 10.webp` |
+| Home | What we deliver | `projects/9th-floor-lobby/08.webp` |
+| Home | What we deliver | `projects/buffet-cladding/04.webp` |
+| Home | What we deliver | `projects/gym/08.webp` |
+| Home | What we deliver | `projects/room-803-deck/04.webp` |
+| Home | Before and after (phone version) | `projects/suite-bathroom/after-02.webp` |
+| Home | Before and after | `projects/lift-lobby/after-02.webp` |
+| Home | Before and after (phone version) | `projects/suite-bathroom/before-02.webp` |
+| Home | Before and after | `projects/lift-lobby/before-01.webp` |
+| Home | Close-up showcase | `projects/room-803-deck/18.webp` |
+| Home | Working in open hotels | `projects/9th-floor-lobby/10.webp` |
+| Home | Contact call to action | `projects/room-803-deck/06.webp` |
+| Services | Page hero | `projects/lift-lobby/after-02.webp` |
+| Services | Core services | `projects/bathroom-gallery/completed-03.webp` |
+| Services | Core services | `projects/lift-lobby/after-01.webp` |
+| Services | Core services | `projects/suite-bathroom/after-01.webp` |
+| Services | Core services | `projects/bathroom-gallery/completed-06.webp` |
+| Services | How we work | `projects/lift-lobby/before-02.webp` |
+| Services | How we work | `projects/suite-bathroom/before-01.webp` |
+| Services | How we work | `projects/bathroom-gallery/completed-04.webp` |
+| Services | How we work | `projects/bathroom-gallery/completed-02.webp` |
+| Services | How we work | `projects/lift-lobby/after-01.webp` |
+| Our Work | Projects | `featured/our-work-first.webp` |
+| Our Work | Projects | `projects/lift-lobby/after-02.webp` |
+| Our Work | Projects | `projects/lift-lobby/before-01.webp` |
+| Our Work | Projects | `projects/suite-bathroom/after-02.webp` |
+| Our Work | Projects | `projects/suite-bathroom/before-02.webp` |
+| Our Work | Projects | `projects/buffet-cladding/03.webp` |
+| Our Work | Projects | `projects/timber-slat-wall/01.webp` |
+| Our Work | Projects | `projects/ceilings-foyer/04.webp` |
+| Our Work | Projects | `projects/gym/02.webp` |
+| Our Work | Catalogue download | `projects/room-803-deck/15.webp` |
+| Our Work | Catalogue download | `projects/9th-floor-lobby/08.webp` |
+| Our Work | Catalogue download | `projects/bathroom-gallery/completed-05.webp` |
+| About | Page hero | `projects/bathroom-gallery/completed-02.webp` |
+| About | Our company | `projects/lift-lobby/after-01.webp` |
+| About | Photo strip | `projects/bathroom-gallery/completed-03.webp` |
+| About | Photo strip | `projects/lift-lobby/after-02.webp` |
+| About | Photo strip | `projects/suite-bathroom/after-01.webp` |
+| Request a Quote |  | `brand/logo-480.webp` |
+| Request a Quote | Recent work | `projects/lift-lobby/after-02.webp` |
+| Request a Quote | Recent work | `projects/bathroom-gallery/completed-05.webp` |
+| Request a Quote | Recent work | `projects/bathroom-gallery/completed-01.webp` |
+| Request a Quote | Recent work | `projects/lift-lobby/after-01.webp` |
+| Our Work | Full gallery | 51 photos, one line each, in `projects.html` under "Full gallery" |
 
 ---
 
@@ -217,7 +238,7 @@ Paths below start from `assets/images/projects/`.
    - the whole `assets` folder
    - `logo.png`, `favicon.png`, `robots.txt`, `sitemap.xml`
    - `NS_Smart_Renovation_Catalogue.pdf`
-4. **Don't upload** `README.md`, `.gitignore`, the `tools` folder, the `.git` folder,
+4. **Don't upload** `README.md`, `.gitignore`, `update-photos.bat`, the `tools` folder, the `.git` folder,
    or a `.taste-skill` or `.claude` folder.
 5. Optional tidy-up: the old site had loose files in `assets/css/` (`site.css`,
    `home.css`, …), `assets/js/` (`site.js`, `projects.js`) and flat images in

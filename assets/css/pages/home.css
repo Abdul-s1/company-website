@@ -136,7 +136,7 @@ html.has-intro .intro {
 .showreel__window {
   position: relative;
   aspect-ratio: 16 / 9;
-  max-height: 80svh;
+  max-height: calc(80 * var(--svh));
   width: 100%;
   overflow: hidden;
   border-radius: var(--radius-lg);
@@ -165,6 +165,11 @@ html.has-intro .intro {
   object-fit: cover;
   visibility: hidden;
 }
+/* Which part of a photo stays in view when the window crops it.
+   Add class="showreel__slide focus-top" (or focus-bottom) to a slide in
+   index.html when the important part sits near the top (or bottom). */
+.showreel__slide.focus-top { object-position: 50% 0; transform-origin: 50% 0; }
+.showreel__slide.focus-bottom { object-position: 50% 100%; transform-origin: 50% 100%; }
 .showreel__slide.is-active,
 .showreel__slide.is-leaving { visibility: visible; }
 .showreel__slide.is-active { z-index: 2; }
@@ -313,7 +318,7 @@ html.has-intro .intro {
   margin-bottom: clamp(40px, 5vw, 72px);
 }
 .before-after__head .lead { color: var(--text-on-dark); }
-.compare--feature { aspect-ratio: 16 / 10; max-height: 86svh; width: 100%; }
+.compare--feature { aspect-ratio: 16 / 10; max-height: calc(86 * var(--svh)); width: 100%; }
 @media (max-width: 860px) {
   .before-after__head { grid-template-columns: 1fr; }
 }
@@ -404,13 +409,13 @@ html.has-intro .intro {
    reveal.js sets data-stage="0|1|2" and the photograph zooms to each detail. */
 .zoom {
   position: relative;
-  height: 260vh;
+  height: calc(260 * var(--vh));
   background: var(--paper);
 }
 .zoom__stage {
   position: sticky;
   top: var(--header-height);
-  height: calc(100svh - var(--header-height));
+  height: calc(100 * var(--svh) - var(--header-height));
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   grid-template-rows: 1fr auto 1fr;
@@ -433,7 +438,7 @@ html.has-intro .intro {
 .zoom__frame {
   grid-column: 2;
   grid-row: 2;
-  width: min(30vw, 46svh);
+  width: min(30vw, calc(46 * var(--svh)));
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: var(--radius-lg);
@@ -459,10 +464,10 @@ html.has-intro .intro {
 }
 
 @media (max-width: 860px) {
-  .zoom { height: 220vh; }
+  .zoom { height: calc(220 * var(--vh)); }
   .zoom__stage { grid-template-columns: 1fr; grid-template-rows: 1fr auto auto auto 1fr; gap: 0; }
   .zoom__title-top { grid-row: 2; margin-bottom: 16px; font-size: 10.5vw; }
-  .zoom__frame { grid-column: 1; grid-row: 3; justify-self: center; width: min(70vw, 44svh); }
+  .zoom__frame { grid-column: 1; grid-row: 3; justify-self: center; width: min(70vw, calc(44 * var(--svh))); }
   .zoom__title-bottom { grid-row: 4; margin-top: 16px; font-size: 10.5vw; }
   .zoom__caption { grid-column: 1; grid-row: 5; justify-self: center; align-self: start; margin: 16px 0 0; text-align: center; font-size: 1rem; }
 }

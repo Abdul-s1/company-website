@@ -95,13 +95,19 @@
        that steps through our work one photo at a time (showreel.js).
 
        HOW TO CHANGE THE SHOWREEL PHOTOS
-       Each photo is ONE line in the list below, shown in that order:
-         <img class="showreel__slide" src="PATH TO PHOTO" data-title="CAPTION" alt="DESCRIPTION">
-         - src         the photo file (landscape photos look best)
-         - data-title  the short caption shown in the glass pill
-         - alt         a sentence describing the photo, for screen readers and Google
-       Add a line to add a photo, delete a line to remove one, move lines to
-       reorder. The timer bar rebuilds itself. Speed: REEL_TIME in showreel.js. -->
+       The photos live in assets/images/showreel/, numbered 01, 02, 03...
+       They play in number order.
+         - Swap one: delete e.g. 04.webp, drop your new photo in as 04.jpg,
+           then double-click update-photos.bat (in the website folder).
+           Then update that photo's caption and description in the list below.
+         - Add one: save it as the next number (e.g. 11.jpg), double-click
+           update-photos.bat, and copy the last line below, changing the number.
+         - Remove one: delete its file AND its line below.
+       Each line:  src = the photo,  data-title = the caption in the glass pill,
+       alt = one sentence describing it (for screen readers and Google).
+       If the window crops off the important part, add focus-top (or
+       focus-bottom) to the class, e.g. class="showreel__slide focus-top".
+       The timer bar rebuilds itself. Speed: REEL_TIME in showreel.js. -->
   <section class="hero" aria-labelledby="hero-title">
     <h1 id="hero-title">Smart spaces. <span class="nowrap">Delivered at speed.</span></h1>
 
@@ -115,14 +121,16 @@
 
     <figure class="showreel" data-showreel aria-roledescription="carousel" aria-label="Our recent work">
       <div class="showreel__window">
-        <img class="showreel__slide" src="assets/images/projects/room-803-deck/01.webp" data-title="Rooftop suite deck, Cape Town" alt="Rooftop suite deck: a granite bar counter with stools, looking out over the Atlantic">
-        <img class="showreel__slide" src="assets/images/projects/9th-floor-lobby/09.webp" data-title="Ninth-floor lift lobby" alt="Lift lobby wrapped in timber slats with cove lighting">
-        <img class="showreel__slide" src="assets/images/projects/buffet-cladding/03.webp" data-title="Hotel buffet area" alt="Buffet counter with navy slat cladding behind it">
-        <img class="showreel__slide" src="assets/images/projects/room-803-deck/15.webp" data-title="Rooftop outdoor kitchen" alt="Outdoor kitchen with hardwood doors, a granite top and a braai">
-        <img class="showreel__slide" src="assets/images/projects/timber-slat-wall/01.webp" data-title="Timber slat feature wall" alt="Timber slat wall with pendant lights over a long work counter">
-        <img class="showreel__slide" src="assets/images/projects/ceilings-foyer/04.webp" data-title="Foyer ceilings and bulkheads" alt="Hotel foyer with new bulkheads, downlights and a brass pendant">
-        <img class="showreel__slide" src="assets/images/projects/room-803-deck/30.webp" data-title="Rooftop bar with a sea view" alt="Rooftop bar counter and seating above the rocks and the sea">
-        <img class="showreel__slide" src="assets/images/projects/gym/02.webp" data-title="Hotel gym" alt="Hotel gym with mirrored walls and new equipment">
+        <img class="showreel__slide focus-top" src="assets/images/showreel/01.webp" data-title="Rooftop suite deck, Lion's Head view" alt="Rooftop suite deck: hardwood steps up to the spa and an outdoor kitchen with a granite top, with Lion's Head behind">
+        <img class="showreel__slide" src="assets/images/showreel/02.webp" data-title="Rooftop bar with a sea view" alt="Rooftop suite deck with a granite bar counter, seating under the pergola and the Atlantic beyond">
+        <img class="showreel__slide" src="assets/images/showreel/03.webp" data-title="Ninth-floor lift lobby" alt="Lift lobby wrapped in timber slats with cove lighting">
+        <img class="showreel__slide" src="assets/images/showreel/04.webp" data-title="Hotel buffet area" alt="Buffet counter in front of a navy slat-clad wall">
+        <img class="showreel__slide" src="assets/images/showreel/05.webp" data-title="Rooftop outdoor kitchen" alt="Outdoor kitchen with hardwood doors and a granite top beside the deck steps">
+        <img class="showreel__slide" src="assets/images/showreel/06.webp" data-title="Timber slat feature wall" alt="Timber slat wall with pendant lights over a long work counter">
+        <img class="showreel__slide" src="assets/images/showreel/07.webp" data-title="Foyer ceilings and bulkheads" alt="Foyer ceiling with a new bulkhead, cove light and a brass pendant">
+        <img class="showreel__slide" src="assets/images/showreel/08.webp" data-title="Lift lobby cladding" alt="Two lifts set into full-height timber slat cladding">
+        <img class="showreel__slide" src="assets/images/showreel/09.webp" data-title="Buffet counter detail" alt="Timber-clad buffet counter running along the navy slat wall">
+        <img class="showreel__slide" src="assets/images/showreel/10.webp" data-title="Boardroom ceiling" alt="Boardroom with a new ceiling, dark bulkhead and downlights">
       </div>
       <figcaption class="showreel__bar">
         <p class="showreel__title" data-showreel-title aria-live="polite"></p>

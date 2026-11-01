@@ -44,7 +44,7 @@
   margin-inline: auto;
   overflow: clip;
   border-radius: var(--radius-lg);
-  height: 100svh;
+  height: calc(100 * var(--svh));
   min-height: 560px;
 }
 .process__panel img {
@@ -59,9 +59,9 @@
   position: sticky;
   z-index: 1;
   max-width: none;
-  top: calc(50svh - 0.45em);       /* holds the middle of the screen */
-  margin-top: calc(50svh - 0.45em);
-  margin-bottom: 25svh;              /* stops above the sentence at the bottom */
+  top: calc(50 * var(--svh) - 0.45em);       /* holds the middle of the screen */
+  margin-top: calc(50 * var(--svh) - 0.45em);
+  margin-bottom: calc(25 * var(--svh));              /* stops above the sentence at the bottom */
   padding-inline: var(--gutter);
   color: var(--white);
   font-family: var(--font-display);
@@ -90,7 +90,7 @@
 .process__text strong { color: var(--ink); }
 
 @media (max-width: 700px) {
-  .process__panel { height: 85svh; }
+  .process__panel { height: calc(85 * var(--svh)); }
   .process__verb { font-size: 19vw; }
   .process__text { right: clamp(16px, 2vw, 28px); font-size: 1rem; }
 }

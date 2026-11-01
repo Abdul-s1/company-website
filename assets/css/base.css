@@ -87,6 +87,23 @@
   --slow: 900ms;
 
   --header-height: 76px;
+
+  /* Screen-height units, corrected for the site-wide zoom below so that
+     "full screen" sections still fill the screen. Use calc(100 * var(--svh))
+     where you would write 100svh. */
+  --vh: 1vh;
+  --svh: 1svh;
+}
+
+/* SITE-WIDE ZOOM: on laptops and desktops the whole site is shown at 75%,
+   like zooming the browser out to 75%. Change 0.75 here (all three places)
+   to make everything bigger or smaller. Phones and tablets stay at 100%. */
+@media (min-width: 1024px) {
+  html { zoom: 0.75; }
+  :root {
+    --vh: calc(1vh / 0.75);
+    --svh: calc(1svh / 0.75);
+  }
 }
 
 /* --- 3. Reset ------------------------------------------------------------- */

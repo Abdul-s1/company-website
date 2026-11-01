@@ -192,7 +192,7 @@
 .page-hero__photo {
   width: calc(100% - 2 * var(--gutter));
   max-width: calc(var(--max-width) - 2 * var(--gutter));
-  height: clamp(280px, 58svh, 640px);
+  height: clamp(280px, calc(58 * var(--svh)), 640px);
   margin-inline: auto;
   overflow: hidden;
   border-radius: var(--radius-lg);
