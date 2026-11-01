@@ -224,7 +224,7 @@ Paths below start from `assets/images/`.
 | Request a Quote | Recent work | `projects/bathroom-gallery/completed-05.webp` |
 | Request a Quote | Recent work | `projects/bathroom-gallery/completed-01.webp` |
 | Request a Quote | Recent work | `projects/lift-lobby/after-01.webp` |
-| Our Work | Full gallery | 51 photos, one line each, in `projects.html` under "Full gallery" |
+| Our Work | Full gallery | 77 photos, one line each, in `projects.html` under "Full gallery" |
 
 ---
 
