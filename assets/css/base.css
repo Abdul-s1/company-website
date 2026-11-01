@@ -1,0 +1,149 @@
+/* ==========================================================================
+   NS SMART — base.css
+   The foundation every page loads first:
+     1. Brand fonts (self-hosted in assets/fonts/)
+     2. Design tokens: colours, type sizes, spacing, motion
+     3. A small reset
+     4. Default type styles (headings, paragraphs, links)
+   Change a colour or a size here and it changes across the whole site.
+   ========================================================================== */
+
+/* --- 1. Brand fonts -------------------------------------------------------
+   Inter (body text) and Poppins (headings). Both are free under the SIL Open
+   Font License; the licence files sit next to the fonts. */
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* --- 2. Design tokens ----------------------------------------------------- */
+:root {
+  /* Brand colours (do not change without the brand guide) */
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --orange: #FF6A00;   /* accent: buttons, the slider handle, focus rings */
+  --slate: #1F2937;
+
+  /* Supporting tones, all mixed from the brand colours */
+  --paper: #F5F5F7;           /* a light, cool field one step off white */
+  --ink: var(--black);        /* headings on light grounds */
+  --text: var(--slate);       /* running text on light grounds */
+  --text-on-dark: #E8EAED;    /* running text on black or slate */
+  --muted-on-dark: #A9B0BA;   /* secondary notes on black or slate */
+  --orange-deep: #E05E00;     /* orange, pressed */
+
+  /* Type families */
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Poppins", "Inter", system-ui, sans-serif;
+
+  /* Type scale: five sizes do all the work on every page */
+  --size-display: clamp(2.2rem, 7.2vw, 7.25rem);  /* hero headline  */
+  --size-heading: clamp(2rem, 4.4vw, 4.25rem);    /* section titles */
+  --size-title: clamp(1.375rem, 2.1vw, 1.875rem); /* row titles, lead text */
+  --size-body: clamp(1.0625rem, 0.3vw + 1rem, 1.1875rem); /* 17–19px */
+  --size-small: 0.875rem;                         /* 14px notes     */
+
+  /* Spacing */
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);          /* the page's outer margin */
+  --section-gap: clamp(6rem, 13vw, 12rem);        /* space between sections */
+  --max-width: 1440px;
+
+  /* Soft corners (the Apple-style look) */
+  --radius-lg: clamp(20px, 2.2vw, 32px);   /* big photos and panels */
+  --radius: 18px;                          /* cards and smaller photos */
+  --radius-pill: 999px;                    /* buttons, labels, controls */
+
+  /* Frosted glass: a see-through tint plus a blur of what is behind it */
+  --glass-dark: rgba(16, 16, 18, 0.58);
+  --glass-light: rgba(255, 255, 255, 0.66);
+  --glass-blur: saturate(180%) blur(22px);
+  --glass-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.18);  /* faint lit edge */
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);   /* long, soft settle */
+  --fast: 200ms;
+  --slow: 900ms;
+
+  --header-height: 76px;
+}
+
+/* --- 3. Reset ------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--header-height); }
+body, h1, h2, h3, h4, p, figure, blockquote, ul, ol { margin: 0; }
+ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+img, picture, video, svg { display: block; max-width: 100%; }
+img { height: auto; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* --- 4. Default type ------------------------------------------------------ */
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: 1.55;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-wrap: balance;
+}
+h1 { font-size: var(--size-display); line-height: 0.98; letter-spacing: -0.04em; }
+h2 { font-size: var(--size-heading); line-height: 1.02; letter-spacing: -0.035em; }
+h3 { font-size: var(--size-title); line-height: 1.15; letter-spacing: -0.02em; }
+
+p { max-width: 62ch; text-wrap: pretty; }
+.lead { font-size: var(--size-title); line-height: 1.4; letter-spacing: -0.01em; color: var(--ink); }
+.small { font-size: var(--size-small); }
+
+a { color: inherit; }
+
+::selection { background: var(--orange); color: var(--black); }
+
+/* Keyboard focus: one clear orange ring everywhere */
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+/* Hidden from view, still read by screen readers */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

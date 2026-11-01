@@ -1,0 +1,118 @@
+/* ==========================================================================
+   NS SMART — pages/services.css   (only loaded by services.html)
+     1. Service list: name | what it covers | photo
+     2. How we work: one verb per full-screen photo
+     3. Where we add value
+   ========================================================================== */
+
+/* --- 1. Service list ------------------------------------------------------ */
+.service-list { display: grid; gap: clamp(72px, 9vw, 128px); }
+.service-item {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr);
+  gap: 32px clamp(32px, 4vw, 64px);
+  align-items: start;
+}
+.service-item h3 { font-size: clamp(1.625rem, 2.8vw, 2.75rem); letter-spacing: -0.03em; }
+.service-item img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); }
+/* Every second row sets its photo a little lower and square, for rhythm */
+.service-item:nth-child(even) img { margin-top: 48px; aspect-ratio: 1; }
+
+@media (max-width: 860px) {
+  .service-item { grid-template-columns: 1fr 1fr; }
+  .service-item h3 { grid-column: 1 / -1; }
+  .service-item:nth-child(even) img { margin-top: 0; }
+}
+@media (max-width: 560px) {
+  .service-item { grid-template-columns: 1fr; }
+  .service-item img { aspect-ratio: 4 / 3; }
+  .service-item:nth-child(even) img { width: 70%; justify-self: end; }
+}
+
+/* --- 2. How we work ---------------------------------------------------------
+   Each stage is a large rounded photograph on a soft grey field. Its verb is
+   "sticky", so it holds the middle of the screen while the photo scrolls
+   past behind it; the sentence sits in a frosted-glass card. */
+.process { background: var(--paper); padding-block: clamp(16px, 2vw, 24px); }
+.process__list { display: grid; gap: clamp(16px, 2vw, 24px); }
+.process__list { margin: 0; padding: 0; list-style: none; }
+.process__panel {
+  position: relative;
+  display: flow-root;             /* keeps the verb's top margin inside the panel */
+  width: calc(100% - 2 * var(--gutter));
+  max-width: calc(var(--max-width) - 2 * var(--gutter));
+  margin-inline: auto;
+  overflow: clip;
+  border-radius: var(--radius-lg);
+  height: 100svh;
+  min-height: 560px;
+}
+.process__panel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.66) saturate(1.05);   /* dimmed just enough for white type */
+}
+.process__verb {
+  position: sticky;
+  z-index: 1;
+  max-width: none;
+  top: calc(50svh - 0.45em);       /* holds the middle of the screen */
+  margin-top: calc(50svh - 0.45em);
+  margin-bottom: 25svh;              /* stops above the sentence at the bottom */
+  padding-inline: var(--gutter);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 15vw, 15rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  text-align: center;
+  white-space: nowrap;
+}
+.process__text {
+  position: absolute;
+  left: clamp(16px, 2vw, 28px);
+  bottom: clamp(16px, 2vw, 28px);
+  z-index: 1;
+  max-width: 40ch;
+  padding: 18px 22px;
+  border-radius: calc(var(--radius-lg) - 8px);
+  background: var(--glass-light);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge);
+  color: var(--text);
+  font-size: 1.0625rem;
+}
+.process__text strong { color: var(--ink); }
+
+@media (max-width: 700px) {
+  .process__panel { height: 85svh; }
+  .process__verb { font-size: 19vw; }
+  .process__text { right: clamp(16px, 2vw, 28px); font-size: 1rem; }
+}
+
+/* --- 3. Where we add value ------------------------------------------------- */
+.sectors {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px clamp(40px, 6vw, 112px);
+}
+.sectors h2 { grid-column: 1 / -1; }
+.sectors__list { grid-column: 2; }
+.sectors__list { display: grid; gap: 40px; margin: 0; }
+.sectors__list dt {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--size-title);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.sectors__list dd { margin: 8px 0 0; max-width: 46ch; }
+@media (max-width: 860px) {
+  .sectors { grid-template-columns: 1fr; }
+  .sectors__list { grid-column: 1; }
+}

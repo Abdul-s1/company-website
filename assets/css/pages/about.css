@@ -1,0 +1,81 @@
+/* ==========================================================================
+   NS SMART — pages/about.css   (only loaded by about.html)
+     1. Our company: text and a tall photo
+     2. What guides us: three values as large rows
+     3. Leadership contacts
+   ========================================================================== */
+
+/* --- 1. Our company --------------------------------------------------------- */
+.story {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 48px clamp(40px, 6vw, 112px);
+  align-items: start;
+}
+.story__copy { display: grid; gap: 24px; }
+.story__copy h2 { margin-bottom: 8px; }
+.story__photo { margin: 0; }
+.story__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); }
+@media (max-width: 860px) {
+  .story { grid-template-columns: 1fr; }
+  .story__photo img { aspect-ratio: 4 / 3; }
+}
+
+/* --- 2. What guides us ------------------------------------------------------ */
+.values h2 { max-width: 16em; margin-bottom: clamp(48px, 7vw, 96px); }
+.values__list { display: grid; gap: clamp(12px, 1.4vw, 16px); margin: 0; }
+/* Each value is a white rounded card on the grey field */
+.values__row {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: 16px clamp(32px, 6vw, 96px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+}
+.values__row dt {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6.4vw, 6rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.values__row dd { margin: 0; max-width: 40ch; color: var(--text); font-size: 1.1875rem; }
+@media (max-width: 760px) {
+  .values__row { grid-template-columns: 1fr; }
+}
+
+/* --- 3. Leadership ------------------------------------------------------------ */
+.leaders__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.leader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+.leader h3 { font-size: clamp(1.75rem, 3vw, 2.75rem); letter-spacing: -0.03em; }
+.leader__role { margin-bottom: 16px; }
+.leader a {
+  color: var(--ink);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  overflow-wrap: anywhere;
+  transition: text-decoration-color var(--fast), color var(--fast);
+}
+.leader a:hover { color: var(--orange-deep); text-decoration-color: currentColor; }
+@media (max-width: 700px) {
+  .leaders__list { grid-template-columns: 1fr; }
+}

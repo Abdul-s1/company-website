@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nssmart.co.za/sitemap.xml

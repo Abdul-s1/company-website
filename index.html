@@ -1,30 +1,331 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Company Website - Preview</title>
-  <style>
-    :root { --bg: #f7f7f5; --text: #1a1a1a; --muted: #666; }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg: #141414; --text: #f0f0f0; --muted: #999; }
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; min-height: 100vh; display: grid; place-items: center;
-      padding: 16px; background: var(--bg); color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      text-align: center;
-    }
-    h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); margin: 0 0 .5rem; }
-    p { color: var(--muted); margin: 0; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hospitality renovations and construction in Cape Town — smart spaces delivered with quality, speed and efficiency.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <title>NS Smart | Hospitality Renovations Cape Town</title>
+  <link rel="canonical" href="https://nssmart.co.za/">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NS Smart">
+  <meta property="og:title" content="NS Smart | Hospitality Renovations Cape Town">
+  <meta property="og:description" content="Hospitality renovations and construction in Cape Town — smart spaces delivered with quality, speed and efficiency.">
+  <meta property="og:url" content="https://nssmart.co.za/">
+  <meta property="og:image" content="https://nssmart.co.za/logo.png">
+  <meta name="theme-color" content="#0A0A0A">
+
+  <!-- Fonts load early so the headline does not jump -->
+  <link rel="preload" href="assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Stylesheets: shared first, then this page's own -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/home.css">
+
+  <!-- Structured data for search engines (unchanged from the live site) -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type":"WebSite","@id":"https://nssmart.co.za/#website","url":"https://nssmart.co.za/","name":"NS Smart","alternateName":"NS Smart Renovations"},
+    {"@type":"Organization","@id":"https://nssmart.co.za/#organization","name":"NS Smart","alternateName":"NS Smart Renovations","url":"https://nssmart.co.za/","logo":{"@type":"ImageObject","url":"https://nssmart.co.za/logo.png"},"areaServed":{"@type":"City","name":"Cape Town"},"email":["AAsmith@nssmart.co.za","AQsmith@nssmart.co.za"],"telephone":["+27 67 802 7070","+27 81 319 1917"]}
+  ]
+}
+</script>
+  <!-- Opening moment: plays whenever someone arrives at the home page from
+       outside the site (a new visit, a refresh, a link or a bookmark), but
+       not when they click "Home" from one of our other pages, and never for
+       reduced motion. This only adds a class; the animation itself is CSS
+       (pages/home.css, "Opening moment"). The timeout is a safety net. -->
+  <script>
+    (function () {
+      var fromOurSite = false;
+      try { fromOurSite = new URL(document.referrer).origin === location.origin; } catch (e) {}
+      var reload = (performance.getEntriesByType('navigation')[0] || {}).type === 'reload';
+      if ((fromOurSite && !reload) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      document.documentElement.classList.add('has-intro');
+      setTimeout(function () { document.documentElement.classList.remove('has-intro'); }, 3100);
+    })();
+  </script>
 </head>
 <body>
-  <main>
-    <h1>New website in progress</h1>
-    <p>This is the test preview. The redesigned site will appear here.</p>
-  </main>
+<!-- ===================== Opening moment =====================
+     White screen: the three pieces of the logo fly together, NS and SMART
+     slide in to meet them, then the screen lifts away. Decorative only. -->
+<div class="intro" aria-hidden="true">
+  <div class="intro__lockup">
+    <div class="intro__mark">
+      <img class="intro__piece intro__piece--grey" src="assets/images/brand/mark-grey.webp" width="364" height="371" alt="">
+      <img class="intro__piece intro__piece--dark" src="assets/images/brand/mark-dark.webp" width="364" height="371" alt="">
+      <img class="intro__piece intro__piece--orange" src="assets/images/brand/mark-orange.webp" width="364" height="371" alt="">
+    </div>
+    <p class="intro__word"><span class="intro__ns">NS</span><span class="intro__smart">SMART</span></p>
+    <span class="intro__line"></span>
+  </div>
+</div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ===================== Site header and navigation ===================== -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="index.html" aria-label="NS Smart home"><img class="wordmark__mark" src="assets/images/brand/logo-mark.webp" width="126" height="128" alt=""><span class="wordmark__text">NS <span>SMART</span></span></a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-navigation">
+      <span class="nav-toggle__label">Menu</span>
+      <span class="nav-toggle__lines" aria-hidden="true"></span>
+    </button>
+    <nav class="main-nav" id="main-navigation" data-main-nav aria-label="Primary navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Our Work</a>
+      <a href="about.html">About</a>
+      <a class="button button--primary main-nav__cta" href="quotation.html">Request a Quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ===================== Hero =====================
+       Headline, one sentence and the buttons, then the showreel: a window
+       that steps through our work one photo at a time (showreel.js).
+
+       HOW TO CHANGE THE SHOWREEL PHOTOS
+       Each photo is ONE line in the list below, shown in that order:
+         <img class="showreel__slide" src="PATH TO PHOTO" data-title="CAPTION" alt="DESCRIPTION">
+         - src         the photo file (landscape photos look best)
+         - data-title  the short caption shown in the glass pill
+         - alt         a sentence describing the photo, for screen readers and Google
+       Add a line to add a photo, delete a line to remove one, move lines to
+       reorder. The timer bar rebuilds itself. Speed: REEL_TIME in showreel.js. -->
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">Smart spaces. <span class="nowrap">Delivered at speed.</span></h1>
+
+    <div class="hero__text">
+      <p class="hero__lead">Renovations for hotels, businesses and homes across Cape Town, run by one team from strip-out to handover.</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="quotation.html">Request a quotation</a>
+        <a class="text-link" href="projects.html">See our work</a>
+      </div>
+    </div>
+
+    <figure class="showreel" data-showreel aria-roledescription="carousel" aria-label="Our recent work">
+      <div class="showreel__window">
+        <img class="showreel__slide" src="assets/images/projects/room-803-deck/01.webp" data-title="Rooftop suite deck, Cape Town" alt="Rooftop suite deck: a granite bar counter with stools, looking out over the Atlantic">
+        <img class="showreel__slide" src="assets/images/projects/9th-floor-lobby/09.webp" data-title="Ninth-floor lift lobby" alt="Lift lobby wrapped in timber slats with cove lighting">
+        <img class="showreel__slide" src="assets/images/projects/buffet-cladding/03.webp" data-title="Hotel buffet area" alt="Buffet counter with navy slat cladding behind it">
+        <img class="showreel__slide" src="assets/images/projects/room-803-deck/15.webp" data-title="Rooftop outdoor kitchen" alt="Outdoor kitchen with hardwood doors, a granite top and a braai">
+        <img class="showreel__slide" src="assets/images/projects/timber-slat-wall/01.webp" data-title="Timber slat feature wall" alt="Timber slat wall with pendant lights over a long work counter">
+        <img class="showreel__slide" src="assets/images/projects/ceilings-foyer/04.webp" data-title="Foyer ceilings and bulkheads" alt="Hotel foyer with new bulkheads, downlights and a brass pendant">
+        <img class="showreel__slide" src="assets/images/projects/room-803-deck/30.webp" data-title="Rooftop bar with a sea view" alt="Rooftop bar counter and seating above the rocks and the sea">
+        <img class="showreel__slide" src="assets/images/projects/gym/02.webp" data-title="Hotel gym" alt="Hotel gym with mirrored walls and new equipment">
+      </div>
+      <figcaption class="showreel__bar">
+        <p class="showreel__title" data-showreel-title aria-live="polite"></p>
+        <button class="showreel__toggle" type="button" data-showreel-toggle aria-pressed="false">Pause</button>
+        <div class="showreel__timer" data-showreel-timer role="group" aria-label="Choose a photo"></div>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ===================== What we deliver =====================
+       A "bento" grid: four rounded photo tiles of different sizes, each with
+       a frosted-glass label. Every tile links to the Services page. -->
+  <section class="bento-section section section--paper" aria-labelledby="services-title">
+    <div class="container">
+      <div class="bento-section__head" data-reveal>
+        <h2 id="services-title">What we deliver.</h2>
+        <p class="lead">Work planned around hotels, offices and homes that stay in use.</p>
+      </div>
+      <div class="bento">
+        <a class="tile tile--hotel" href="services.html" data-reveal>
+          <img src="assets/images/projects/9th-floor-lobby/08.webp" loading="lazy" alt="Lift lobby with timber slat cladding and cove lighting">
+          <span class="tile__glass">
+            <span class="tile__title">Hotel and hospitality renovations</span>
+            <span class="tile__text">Guest rooms, suite bathrooms, corridors and public areas, planned around a hotel that stays open.</span>
+          </span>
+        </a>
+        <a class="tile tile--commercial" href="services.html" data-reveal>
+          <img src="assets/images/projects/buffet-cladding/04.webp" loading="lazy" alt="Hotel buffet counter in front of navy slat cladding">
+          <span class="tile__glass">
+            <span class="tile__title">Commercial refurbishments</span>
+            <span class="tile__text">Reception, office and common-area upgrades that improve how a property looks and works.</span>
+          </span>
+        </a>
+        <a class="tile tile--maintenance" href="services.html" data-reveal>
+          <img src="assets/images/projects/gym/08.webp" loading="lazy" alt="Accessible shower with a fold-down seat and grab rails">
+          <span class="tile__glass">
+            <span class="tile__title">Planned maintenance</span>
+            <span class="tile__text">Repairs and preventative work that keep rooms guest-ready between bigger projects.</span>
+          </span>
+        </a>
+        <a class="tile tile--fitout" href="services.html" data-reveal>
+          <img src="assets/images/projects/room-803-deck/04.webp" loading="lazy" alt="Outdoor kitchen with hardwood cupboard doors under a granite top">
+          <span class="tile__glass">
+            <span class="tile__title">Construction and fit-outs</span>
+            <span class="tile__text">Alterations, tiling, plumbing, cabinetry and finishes, with specialist trades coordinated as one scope.</span>
+          </span>
+        </a>
+      </div>
+      <div class="bento-section__more"><a class="text-link" href="services.html">Explore our services</a></div>
+    </div>
+  </section>
+
+  <!-- ===================== Before and after =====================
+       The comparison slider (slider.js): drag, swipe sideways or use the
+       arrow keys. Wide screens: lift lobby. Phones: a portrait bathroom pair. -->
+  <section class="before-after section section--dark" aria-labelledby="ba-title">
+    <div class="container before-after__head" data-reveal>
+      <h2 id="ba-title">See the difference.</h2>
+      <p class="lead">Drag across a hotel lift lobby we refurbished: painted walls and a tired dado became timber slats and dark lift surrounds.</p>
+    </div>
+    <div class="container">
+      <div class="compare compare--feature" data-compare>
+        <!-- AFTER photo (sits underneath) -->
+        <picture>
+          <source media="(max-width: 700px) and (orientation: portrait)" srcset="assets/images/projects/suite-bathroom/after-02.webp">
+          <img class="compare__img" src="assets/images/projects/lift-lobby/after-02.webp" loading="lazy" alt="A finished NS Smart refurbishment">
+        </picture>
+        <!-- BEFORE photo (clipped on top; the slider moves the clip) -->
+        <div class="compare__before">
+          <picture>
+            <source media="(max-width: 700px) and (orientation: portrait)" srcset="assets/images/projects/suite-bathroom/before-02.webp">
+            <img class="compare__img" src="assets/images/projects/lift-lobby/before-01.webp" loading="lazy" alt="The same space before the work">
+          </picture>
+        </div>
+        <span class="compare__label compare__label--before" aria-hidden="true">Before</span>
+        <span class="compare__label compare__label--after" aria-hidden="true">After</span>
+        <div class="compare__handle" data-compare-handle role="slider" tabindex="0"
+             aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <span class="compare__knob" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Close-up showcase =====================
+       One photograph, three distances. As you scroll, the frame zooms
+       from the outdoor kitchen on the 803 deck to two details (reveal.js).
+       With reduced motion it simply shows the whole photograph. -->
+  <section class="zoom" data-zoom aria-labelledby="zoom-title">
+    <div class="zoom__stage">
+      <h2 id="zoom-title" class="zoom__title">
+        <span class="zoom__title-top">Quality you can</span>
+        <span class="zoom__title-bottom">see up close.</span>
+      </h2>
+      <div class="zoom__frame">
+        <img class="zoom__img" src="assets/images/projects/room-803-deck/18.webp" loading="lazy" alt="Outdoor kitchen on a rooftop deck: a granite top, a steel sink and a warm wall light">
+      </div>
+      <p class="zoom__caption">A granite top, a steel sink and a wall light, built to last outdoors in the sea air.</p>
+    </div>
+  </section>
+
+  <!-- ===================== Working in open hotels =====================
+       Wide photo with a note on top, a slate tile of facts beside it. -->
+  <section class="open-hotels section" aria-labelledby="open-title">
+    <div class="container">
+      <div class="open-hotels__head" data-reveal>
+        <h2 id="open-title">Built for buildings that stay open.</h2>
+        <p class="lead">Most of our work happens while guests and staff are in the building. We plan around agreed noise windows, occupied rooms next door and the date a space must be back in use.</p>
+      </div>
+      <div class="open-hotels__tiles">
+        <figure class="open-hotels__photo" data-reveal>
+          <img src="assets/images/projects/9th-floor-lobby/10.webp" loading="lazy" alt="Ninth-floor lift lobby with timber slat cladding and cove lighting">
+          <figcaption class="open-hotels__note">One point of contact runs every trade: our own team for building and finishing, and trusted specialists for electrical, roofing, waterproofing and glazing, coordinated as one job.</figcaption>
+        </figure>
+        <div class="open-hotels__facts" data-reveal>
+          <p class="open-hotels__place">Cape Town</p>
+          <dl class="facts">
+            <div><dt>Service area</dt><dd>Cape Town and surrounds</dd></div>
+            <div><dt>Lead focus</dt><dd>Hotels and hospitality</dd></div>
+            <div><dt>Also for</dt><dd>Commercial spaces and homes</dd></div>
+            <div><dt>Your contact</dt><dd>A director, start to finish</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Brand line marquee =====================
+       The signature motion: the brand line drifts across the screen.
+       Pauses on hover; stands still for reduced motion. -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Smart spaces. Delivered at speed.</span><span class="marquee__dot"></span>
+      <span>Smart spaces. Delivered at speed.</span><span class="marquee__dot"></span>
+      <span>Smart spaces. Delivered at speed.</span><span class="marquee__dot"></span>
+      <span>Smart spaces. Delivered at speed.</span><span class="marquee__dot"></span>
+    </div>
+  </div>
+
+  <!-- ===================== Contact call to action ===================== -->
+  <section class="cta-split" id="contact" aria-labelledby="cta-title">
+    <div class="cta-split__photo">
+      <img src="assets/images/projects/room-803-deck/06.webp" loading="lazy" alt="Hardwood deck steps beside an outdoor kitchen on a rooftop">
+    </div>
+    <div class="cta-split__body" data-reveal>
+      <h2 id="cta-title">Planning your next project?</h2>
+      <p>Contact us to discuss your hospitality, commercial or home renovation. Tell us the location, the work and your timeframe.</p>
+      <a class="button button--primary" href="quotation.html">Request a quotation</a>
+      <div class="contact-pair">
+        <div class="contact-card">
+          <p class="contact-card__name">Abdul Aziz Smith <span>Director</span></p>
+          <a href="tel:+27678027070">067 802 7070</a>
+          <a href="mailto:AAsmith@nssmart.co.za">AAsmith@nssmart.co.za</a>
+        </div>
+        <div class="contact-card">
+          <p class="contact-card__name">Abdul Qayyum Smith <span>Director</span></p>
+          <a href="tel:+27813191917">081 319 1917</a>
+          <a href="mailto:AQsmith@nssmart.co.za">AQsmith@nssmart.co.za</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== Floating contact button =====================
+     Appears once you scroll past the first screen (main.js). -->
+<a class="float-contact" href="quotation.html" data-float-contact>Request a quote</a>
+
+<!-- ===================== Footer ===================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <nav class="site-footer__menu" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Our Work</a>
+      <a href="about.html">About</a>
+      <a href="quotation.html">Request a Quote</a>
+    </nav>
+    <div class="site-footer__contact">
+      <h2 class="site-footer__title">Contact</h2>
+      <a href="tel:+27678027070">067 802 7070</a>
+      <a href="tel:+27813191917">081 319 1917</a>
+      <a href="mailto:AAsmith@nssmart.co.za">AAsmith@nssmart.co.za</a>
+      <a href="mailto:AQsmith@nssmart.co.za">AQsmith@nssmart.co.za</a>
+    </div>
+    <div class="site-footer__contact">
+      <h2 class="site-footer__title">Catalogue</h2>
+      <a href="NS_Smart_Renovation_Catalogue.pdf" target="_blank" rel="noopener">Renovation catalogue (PDF)</a>
+      <p>Cape Town, South Africa</p>
+    </div>
+  </div>
+  <p class="site-footer__name" aria-hidden="true">NS <span>SMART</span></p>
+  <div class="container site-footer__legal">
+    <span>© <span data-year>2026</span> NS Smart. All rights reserved.</span>
+    <span>Smart spaces. Delivered at speed.</span>
+  </div>
+</footer>
+
+<!-- Scripts: each file does one job (see README) -->
+<script src="assets/js/nav.js" defer></script>
+<script src="assets/js/reveal.js" defer></script>
+<script src="assets/js/slider.js" defer></script>
+<script src="assets/js/showreel.js" defer></script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

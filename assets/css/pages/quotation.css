@@ -1,0 +1,69 @@
+/* ==========================================================================
+   NS SMART — pages/quotation.css   (only loaded by quotation.html)
+   Two columns: the ask on the left, the two directors on the right.
+   ========================================================================== */
+
+.quote { padding-block: clamp(64px, 10vw, 160px); }
+.quote__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: 56px clamp(40px, 7vw, 128px);
+  align-items: start;
+}
+.quote__intro h1 { font-size: clamp(2.5rem, 6vw, 5.5rem); }
+.quote__intro .lead { margin-top: 28px; font-size: 1.25rem; line-height: 1.5; }
+.quote__note { margin-top: 20px; }
+.quote__logo { width: 168px; margin-top: 48px; }
+
+.quote__contacts { display: grid; gap: 16px; justify-items: start; }
+.quote-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+.quote-card h2 { font-size: var(--size-title); }
+.quote-card__role { margin-bottom: 14px; font-size: 1rem; }
+/* The email address is the big, tappable thing on this page */
+.quote-card__email {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  overflow-wrap: anywhere;
+  transition: color var(--fast);
+}
+.quote-card__email:hover { color: var(--orange-deep); }
+.quote-card__phone { color: var(--text); font-size: 1.0625rem; text-decoration: none; }
+.quote-card__phone:hover { color: var(--ink); text-decoration: underline; }
+.quote__contacts .text-link { margin-top: 16px; }
+
+@media (max-width: 860px) {
+  .quote__grid { grid-template-columns: 1fr; }
+}
+
+/* Recent work strip under the contacts */
+.quote__work { margin-top: var(--section-gap); }
+
+/* Page entrance: the title, text and both contact cards rise in on load */
+@media (prefers-reduced-motion: no-preference) {
+  .quote__intro > *, .quote__contacts > * { animation: quote-rise 800ms var(--ease-out) both; }
+  .quote__intro > :nth-child(2) { animation-delay: 80ms; }
+  .quote__intro > :nth-child(3) { animation-delay: 160ms; }
+  .quote__intro > :nth-child(4) { animation-delay: 240ms; }
+  .quote__contacts > :nth-child(1) { animation-delay: 160ms; }
+  .quote__contacts > :nth-child(2) { animation-delay: 240ms; }
+  .quote__contacts > :nth-child(3) { animation-delay: 320ms; }
+}
+@keyframes quote-rise {
+  from { opacity: 0; transform: translateY(24px); }
+}

@@ -1,0 +1,517 @@
+/* ==========================================================================
+   NS SMART — components.css
+   Reusable pieces used on more than one page:
+     1. Buttons and text links (with hover, press and focus states)
+     2. Before/after comparison slider
+     3. Brand-line marquee
+     4. Call-to-action split (photo + contact)
+     5. Floating contact button
+     6. Image viewer (lightbox) on Our Work
+     7. Scroll entrances
+   ========================================================================== */
+
+/* --- 1. Buttons and text links ------------------------------------------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 14px 26px;
+  border: 0;
+  border-radius: var(--radius-pill);   /* soft pill shape */
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color var(--fast), color var(--fast), transform 360ms var(--ease-smooth);
+}
+.button:hover { transform: translateY(-2px); }
+/* An arrow that nudges forward on hover */
+.button::after {
+  content: "→";
+  transition: transform var(--fast) var(--ease-out);
+}
+.button:hover::after { transform: translateX(4px); }
+.button:active { transform: translateY(1px) scale(0.985); }
+
+/* Orange with black text: the one main action on each screen */
+.button--primary { background: var(--orange); color: var(--black); }
+.button--primary:hover { background: var(--white); }
+.section--paper .button--primary:hover,
+.button--primary.on-light:hover { background: var(--black); color: var(--white); }
+.button--primary:active { background: var(--orange-deep); color: var(--black); }
+
+/* Black button for light grounds */
+.button--dark { background: var(--black); color: var(--white); }
+.button--dark:hover { background: var(--orange); color: var(--black); }
+
+/* Text link with an underline that wipes in */
+.text-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 6px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--fast);
+}
+.text-link::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 260ms var(--ease-out);
+}
+.text-link::after { content: "→"; transition: transform var(--fast) var(--ease-out); }
+.text-link:hover { color: var(--orange-deep); }
+.text-link:hover::before { transform: scaleX(0); }
+.text-link:hover::after { transform: translateX(4px); }
+.text-link--light { color: var(--white); }
+.text-link--light:hover { color: var(--orange); }
+
+/* --- 2. Before/after comparison slider -----------------------------------
+   The "after" photo sits underneath; the "before" photo is laid on top and
+   clipped by --pos (set by slider.js). Works with mouse, touch and keyboard.
+   Without JavaScript it rests at 50% so both photos are always visible. */
+.compare {
+  --pos: 50%;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;               /* keeps the rounded corners clipping on Safari */
+  background: var(--slate);
+  touch-action: pan-y;          /* phones: vertical swipes still scroll the page */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+.compare__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.compare picture { display: contents; }
+.compare > picture .compare__img,
+.compare > .compare__img { position: absolute; inset: 0; }
+.compare__before {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+.compare__before .compare__img { position: absolute; inset: 0; }
+
+/* The divider line and its round grip */
+.compare__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 48px;
+  margin-left: -24px;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  outline: none;
+}
+.compare__handle::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: rgba(255, 255, 255, 0.9);
+}
+/* The grip is a frosted-glass disc; it floats, so it casts a soft shadow */
+.compare__knob {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--glass-light);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge), 0 10px 30px rgba(10, 10, 10, 0.25);
+  transition: transform 360ms var(--ease-smooth), background-color var(--fast);
+}
+/* Two small arrows inside the grip */
+.compare__knob::before,
+.compare__knob::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0; height: 0;
+  border-block: 7px solid transparent;
+  transform: translateY(-50%);
+}
+.compare__knob::before { left: 13px; border-right: 9px solid var(--black); }
+.compare__knob::after { right: 13px; border-left: 9px solid var(--black); }
+
+.compare:hover .compare__knob,
+.compare.is-dragging .compare__knob { transform: scale(1.1); }
+.compare.is-dragging .compare__knob { background: var(--orange); }
+.compare__handle:focus-visible .compare__knob {
+  outline: 3px solid var(--white);
+  outline-offset: 4px;
+  transform: scale(1.1);
+}
+
+/* "Before" / "After" corner labels */
+.compare__label {
+  position: absolute;
+  top: 20px;
+  z-index: 1;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-dark);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge);
+  color: var(--white);
+  font-size: var(--size-small);
+  font-weight: 600;
+  pointer-events: none;
+  transition: opacity var(--fast);
+}
+.compare__label--before { left: 20px; }
+.compare__label--after { right: 20px; background: var(--glass-light); color: var(--black); }
+/* Hide a label once its photo is almost fully covered */
+.compare[data-near="start"] .compare__label--before,
+.compare[data-near="end"] .compare__label--after { opacity: 0; }
+
+/* --- 3. Brand-line marquee ----------------------------------------------- */
+.marquee {
+  overflow: hidden;
+  padding-block: clamp(12px, 1.6vw, 22px);
+  background: var(--orange);
+  color: var(--black);
+}
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  width: max-content;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+.marquee__dot {
+  width: 0.22em;
+  height: 0.22em;
+  border-radius: 50%;
+  background: currentColor;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee__track { animation: marquee 38s linear infinite; }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* --- 4. Call-to-action split ---------------------------------------------
+   One large rounded black panel: photograph on the left half, the ask and
+   both directors on the right. */
+.cta-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: calc(100% - 2 * var(--gutter));
+  max-width: calc(var(--max-width) - 2 * var(--gutter));
+  margin: 0 auto clamp(48px, 7vw, 96px);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--black);
+  color: var(--text-on-dark);
+}
+.cta-split__photo { min-height: 100%; overflow: hidden; }
+.cta-split__photo img { width: 100%; height: 100%; object-fit: cover; }
+.cta-split__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 28px;
+  padding: clamp(64px, 9vw, 140px) var(--gutter);
+  max-width: 720px;
+}
+.cta-split__body h2 { color: var(--white); }
+.cta-split__body > p { font-size: 1.1875rem; }
+
+.contact-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  width: 100%;
+  margin-top: 24px;
+}
+.contact-card { display: flex; flex-direction: column; gap: 6px; }
+.contact-card__name { color: var(--white); font-weight: 600; }
+.contact-card__name span { display: block; color: var(--muted-on-dark); font-weight: 400; font-size: var(--size-small); }
+.contact-card a {
+  color: var(--text-on-dark);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+  transition: color var(--fast), text-decoration-color var(--fast);
+}
+.contact-card a:hover { color: var(--white); text-decoration-color: var(--orange); }
+
+@media (max-width: 860px) {
+  .cta-split { grid-template-columns: 1fr; }
+  .cta-split__photo { height: 52svh; }
+}
+@media (max-width: 520px) {
+  .contact-pair { grid-template-columns: 1fr; }
+}
+
+/* --- 5. Floating contact button -------------------------------------------
+   Slides in after the first screen (main.js adds .is-visible) and steps
+   aside when the footer or a contact section is on screen. */
+.float-contact {
+  position: fixed;
+  right: var(--gutter);
+  bottom: 20px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-dark);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge), 0 12px 32px rgba(10, 10, 10, 0.22);  /* it floats */
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out), visibility 0s linear 240ms, background-color var(--fast);
+}
+.float-contact::after { content: "→"; color: var(--orange); transition: transform var(--fast) var(--ease-out), color var(--fast); }
+.float-contact.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out), background-color var(--fast);
+}
+.float-contact:hover { background: var(--orange); color: var(--black); }
+.float-contact:hover::after { color: var(--black); }
+.float-contact:hover::after { transform: translateX(4px); }
+
+/* --- 6. Image viewer (lightbox) ------------------------------------------ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 56px);
+  background: rgba(10, 10, 10, 0.72);
+  -webkit-backdrop-filter: saturate(140%) blur(28px);
+  backdrop-filter: saturate(140%) blur(28px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms var(--ease-out), visibility 0s linear 220ms;
+}
+body.no-scroll { overflow: hidden; }
+.lightbox.is-open { opacity: 1; visibility: visible; transition: opacity 220ms var(--ease-out); }
+.lightbox img { max-height: 88svh; width: auto; object-fit: contain; border-radius: var(--radius); }
+.lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: var(--gutter);
+  min-height: 48px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--black);
+  font-weight: 600;
+  transition: background-color var(--fast);
+}
+.lightbox__close:hover { background: var(--orange); }
+
+/* --- 7. Scroll entrances --------------------------------------------------
+   Only parts that start BELOW the first screen are hidden, and only when
+   JavaScript is running (reveal.js adds .reveal-pending). Nothing waits on
+   screen: each part rises in as it enters, in a short stagger, coming
+   into focus from a soft blur. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-pending {
+    opacity: 0;
+    transform: translateY(36px) scale(0.985);
+    filter: blur(8px);
+  }
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: opacity 900ms var(--ease-smooth), transform 1100ms var(--ease-smooth), filter 900ms var(--ease-smooth);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+/* --- 8. Section intro -----------------------------------------------------
+   A section heading with its one-line lead underneath. */
+.section-intro { max-width: 920px; margin-bottom: clamp(48px, 7vw, 96px); }
+.section-intro .lead { margin-top: 20px; }
+
+/* --- 9. Call-to-action band (inner pages) ---------------------------------
+   Orange field: the ask on the left, the button on the right. */
+.cta-band {
+  width: calc(100% - 2 * var(--gutter));
+  max-width: calc(var(--max-width) - 2 * var(--gutter));
+  margin: 0 auto clamp(48px, 7vw, 96px);
+  border-radius: var(--radius-lg);
+  background: var(--orange);
+  color: var(--black);
+  padding-block: clamp(64px, 9vw, 128px);
+}
+.cta-band > .container { padding-inline: clamp(24px, 5vw, 80px); }
+.cta-band__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: end;
+  gap: 32px clamp(32px, 6vw, 96px);
+}
+.cta-band h2 { grid-column: 1 / -1; max-width: 16em; }
+.cta-band__inner > div { grid-column: 2; }
+.cta-band p { margin-bottom: 28px; color: var(--black); font-size: 1.1875rem; }
+/* On orange, the main button turns black */
+.cta-band .button--primary { background: var(--black); color: var(--white); }
+.cta-band .button--primary:hover { background: var(--white); color: var(--black); }
+.cta-band :focus-visible { outline-color: var(--black); }
+@media (max-width: 760px) {
+  .cta-band__inner { grid-template-columns: 1fr; }
+  .cta-band__inner > div { grid-column: 1; }
+}
+
+/* --- 10. Small lists ------------------------------------------------------ */
+/* Ticked list (Services) */
+.tick-list { display: grid; gap: 10px; margin-top: 20px; padding: 0; list-style: none; }
+.tick-list li { position: relative; padding-left: 28px; color: var(--ink); }
+.tick-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 0.42em;
+  width: 12px; height: 7px;
+  border-left: 2.5px solid var(--orange-deep);
+  border-bottom: 2.5px solid var(--orange-deep);
+  transform: rotate(-45deg);
+}
+/* Short tags (Our Work) */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding: 0; list-style: none; }
+.tags li { padding: 7px 14px; border-radius: var(--radius-pill); background: var(--paper); color: var(--ink); font-size: var(--size-small); font-weight: 500; }
+
+/* Keep the lower part of a photo in view when it is cropped */
+.focus-low { object-position: 50% 70%; }
+
+/* --- 11. Photo strip --------------------------------------------------------
+   A row of finished spaces, edge to edge (About, Quotation). */
+.photo-strip {
+  display: grid;
+  grid-template-columns: 4fr 6fr 4fr;
+  gap: 16px;
+  padding-inline: var(--gutter);
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+.photo-strip img { width: 100%; height: clamp(260px, 36vw, 520px); object-fit: cover; border-radius: var(--radius); }
+.photo-strip--four { grid-template-columns: 5fr 3fr 3fr 3fr; padding-inline: 0; margin-block: 32px 24px; }
+.photo-strip--four img { height: clamp(200px, 22vw, 320px); transition: transform 600ms var(--ease-out); }
+.photo-strip--four a { display: block; overflow: hidden; border-radius: var(--radius); }
+.photo-strip--four a:hover img { transform: scale(1.04); }
+@media (max-width: 700px) {
+  .photo-strip { grid-template-columns: 1fr 1fr; }
+  .photo-strip img:nth-child(2) { grid-column: 1 / -1; grid-row: 1; }
+  .photo-strip--four { grid-template-columns: 1fr 1fr; }
+  .photo-strip--four a:first-child { grid-column: 1 / -1; }
+}
+
+/* --- 12. Chips ----------------------------------------------------------------
+   Small pill buttons and links (Our Work: jump links and gallery filters).
+   aria-pressed="true" marks the chosen filter. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--fast), color var(--fast), transform 300ms var(--ease-smooth);
+}
+.section--paper .chip { background: var(--white); }
+.chip:hover { background: #E8E8ED; transform: translateY(-1px); }
+.chip[aria-pressed="true"] { background: var(--black); color: var(--white); }
+
+/* --- 13. Image viewer: arrows and caption ------------------------------------ */
+.lightbox__figure { display: grid; justify-items: center; gap: 14px; margin: 0; }
+.lightbox__caption { color: rgba(255, 255, 255, 0.86); font-size: var(--size-small); text-align: center; }
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--glass-light);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge);
+  transform: translateY(-50%);
+  transition: background-color var(--fast), transform 300ms var(--ease-smooth);
+}
+.lightbox__nav::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 11px; height: 11px;
+  border-top: 2.5px solid var(--black);
+  border-right: 2.5px solid var(--black);
+}
+.lightbox__nav--prev { left: var(--gutter); }
+.lightbox__nav--prev::before { transform: translate(-30%, -50%) rotate(-135deg); }
+.lightbox__nav--next { right: var(--gutter); }
+.lightbox__nav--next::before { transform: translate(-70%, -50%) rotate(45deg); }
+.lightbox__nav:hover { background: var(--orange); transform: translateY(-50%) scale(1.06); }
+.lightbox__nav:focus-visible { outline-color: var(--white); }
+.lightbox img { max-height: 80svh; }
+@media (max-width: 700px) {
+  .lightbox__nav { top: auto; bottom: 20px; transform: none; }
+  .lightbox__nav:hover { transform: none; }
+}
+
+/* On phones a row of chips scrolls sideways instead of wrapping onto many lines */
+@media (max-width: 700px) {
+  .chips,
+  .jump-links ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 2px var(--gutter) 8px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chips::-webkit-scrollbar,
+  .jump-links ul::-webkit-scrollbar { display: none; }
+  .chip { flex: none; white-space: nowrap; }
+}
